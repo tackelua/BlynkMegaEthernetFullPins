@@ -4,7 +4,7 @@
 	Name:       FullPins.ino
 	Created:	11-Oct-18 09:30:06
 	Author:     GITH\tacke
-	Version:	0.2
+	Version:	0.2.1
 */
 
 
@@ -24,8 +24,8 @@ uint16_t port = 8442;
 //#define DEBUG(x);		Terminal.println(x);Terminal.flush();
 
 unsigned long RELAY_ON_DURATION = 300;	//ms
-#define R_ON	true
-#define R_OFF	false
+#define R_ON	LOW
+#define R_OFF	HIGH
 
 char* C_ONLINE = "#00ff00";				//GREEN
 char* C_OFFLINE = "#020202";			//BLACK
@@ -157,7 +157,7 @@ void relay_off(byte i) {
 
 void relay_auto_off(unsigned long t) {
 	for (byte i = 1; i <= NUM_OF_RELAYS; i++) {
-		if (RELAY_S[i] && (millis() - TIME_RELAY_ON[i] > t)) {
+		if (RELAY_S[i] == R_ON && (millis() - TIME_RELAY_ON[i] > t)) {
 			relay_off(i);
 		}
 	}
